@@ -18,9 +18,10 @@ export default class RecipeHandlerService extends Service {
 
   // Add recipes to Ember Data store if not already present
   checkCreateItemsinStores(recipes) {
+    let deletedIds = this.getDeletedIdsFromLocalStorage();
     recipes.forEach((recipe) => {
       let existingRecipe = this.store.peekRecord('recipe', recipe.id);
-      if (!existingRecipe) {
+      if (!existingRecipe && !deletedIds.includes(recipe.id)) {
         this.store.createRecord('recipe', {
           id: recipe.id,
           title: recipe.title,
@@ -57,15 +58,24 @@ export default class RecipeHandlerService extends Service {
   // Only From Local Storage
   async deleteRecipe(recipeId) {
     this.removeRecipeFromLocalStorage(recipeId);
+    this.addDeletedIdsToLocalStorage(recipeId);
     this.store.peekRecord('recipe', recipeId)?.destroyRecord();
   }
 
 
   removeRecipeFromLocalStorage(recipeId){
     let recipes = this.recipesFromLocalStorage();
-    if(recipes.includes(recipeId)){
-       let newRecipes = recipes.filter(recipe => recipe.id !== recipeId);
-       localStorage.setItem('recipes', JSON.stringify(newRecipes));
-    }
+    let newRecipes = recipes.filter(recipe => recipe.id !== recipeId);
+    localStorage.setItem('recipes', JSON.stringify(newRecipes));
+  }
+
+  addDeletedIdsToLocalStorage(recipeId) {
+    let deletedIds = this.getDeletedIdsFromLocalStorage();
+    deletedIds.push(recipeId);
+    localStorage.setItem('deletedRecipeIds', JSON.stringify(deletedIds));
+  }
+
+  getDeletedIdsFromLocalStorage() {
+    return JSON.parse(localStorage.getItem('deletedRecipeIds') || '[]');
   }
 }

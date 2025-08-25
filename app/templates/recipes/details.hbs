@@ -4,20 +4,24 @@
 
 <div class="recipe-info-section">
 
-    <h3>Ingredients</h3>
+  <h3>Ingredients</h3>
 
-    <ol>
-        {{#each @model.ingredients as |ingredient|}}
-            <li>{{ingredient}}</li>
-        {{/each}}
-    </ol>
+  <ol>
+    {{#each @model.ingredients as |ingredient|}}
+      <li>{{ingredient}}</li>
+    {{/each}}
+  </ol>
 
 </div>
 
 <div class="recipe-info-section">
 
-    <h3>Instructions</h3>
+  <h3>Instructions</h3>
 
-    <p>{{@model.instructions}}</p>
+  <p>{{@model.instructions}}</p>
 
+</div>
+
+<div class="text-center">
+  <button type="button" {{on "click" this.deleteRecipe}}>Delete Recipe</button>
 </div>
