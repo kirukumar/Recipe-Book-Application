@@ -1,0 +1,8 @@
+<div class="recipe-overview" {{on "click" this.toggle}}>
+  <h3>{{@recipe.title}}</h3>
+  {{#if this.isExpandable}}
+    <p class="recipe-detail">{{@recipe.description}}</p>
+    <LinkTo @route="recipes/details" @model={{@recipe.id}} class="recipe-link">View Details</LinkTo>
+  {{/if}}
+
+</div>

@@ -1,5 +1,7 @@
 {{page-title "Recipes"}}
 
+<h1>Recipe Book Application</h1>
+
 {{#each @model as |recipe|}}
-  {{recipe.title}}
+  <RecipeContainer @recipe={{recipe}} />
 {{/each}}
