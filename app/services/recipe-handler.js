@@ -78,4 +78,19 @@ export default class RecipeHandlerService extends Service {
   getDeletedIdsFromLocalStorage() {
     return JSON.parse(localStorage.getItem('deletedRecipeIds') || '[]');
   }
+
+  toggleFavorite(recipeId, isFavorite) {
+    let favorites = this.getFavoriteRecipesFromLocalStorage();
+    if (isFavorite) {
+      favorites.push(recipeId);
+    } else {
+      favorites = favorites.filter(id => id !== recipeId);
+    }
+    localStorage.setItem('favoriteRecipeIds', JSON.stringify(favorites));
+  }
+
+  getFavoriteRecipesFromLocalStorage() {
+    return JSON.parse(localStorage.getItem('favoriteRecipeIds') || '[]');
+  }
+  
 }

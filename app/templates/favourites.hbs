@@ -1,2 +1,5 @@
 {{page-title "Favourites"}}
 <h1>Favourites</h1>
+{{#each @model as |recipe|}}
+  <RecipeContainer @recipe={{recipe}} />
+{{/each}}
